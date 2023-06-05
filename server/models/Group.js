@@ -9,6 +9,10 @@ const groupSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  cohort: {
+    type: String,
+    required: true,
+  },
   members: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
@@ -25,8 +29,14 @@ const groupSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  resourceLibrary: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Resource'
+  }],
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
+
+module.exports = mongoose.model('Group', groupSchema);
