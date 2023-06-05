@@ -1,0 +1,62 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #2c00009f;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    box-sizing: border-box;
+  }
+  
+  .left h1 {
+    margin: 0;
+  }
+  
+  .center nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .center nav ul li {
+    margin: 0 10px;
+  }
+  
+  .right button {
+    margin-left: 10px;
+    font-weight: bold;
+    background-color: transparent; 
+    cursor: pointer;
+    border-radius: 2rem;
+    width: 100px;
+    height: 30px;
+  }
+  
+  .hamburger {
+    display: none;
+  }
+  
+  /* Media Query for phone screen levels */
+  @media only screen and (max-width: 600px) {
+    .center {
+      display: none;
+    }
+  
+    .right {
+      margin-left: auto;
+    }
+  
+    .hamburger {
+      display: block;
+      cursor: pointer;
+    }
+  }
+  
+  
+  
