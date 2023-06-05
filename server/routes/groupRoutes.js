@@ -17,4 +17,16 @@ router.put('/group/:id', groupController.updateGroup);
 // Delete a group with groupId
 router.delete('/group/:id', groupController.deleteGroup);
 
+// Add a resource to group's library
+router.post('/group/:id/resource', groupController.addResourceToLibrary);
+
+// Remove a resource from group's library
+router.delete('/group/:id/resource/:resourceId', groupController.deleteResource);
+
+// Get all resources from group's library
+router.get('/group/:id/resources', groupController.getResources);
+
+// Update a resource from group's library
+router.put('/group/:id/resource/:resourceId', groupController.updateResource);
+
 module.exports = router;
