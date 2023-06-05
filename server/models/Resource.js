@@ -19,3 +19,5 @@ const resourceSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+module.exports = mongoose.model('Resource', resourceSchema);
