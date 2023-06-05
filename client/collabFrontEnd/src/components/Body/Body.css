@@ -1,0 +1,13 @@
+.App-body {
+    font-size: 1rem;
+    /* border-bottom: 3px solid #e0354b; */
+    /* box-sizing: border-box; */
+    overflow-x: hidden;
+}
+.collab-logo{
+    box-sizing: border-box;
+    position: relative;
+}
+form input {
+    margin: 10px;
+}
