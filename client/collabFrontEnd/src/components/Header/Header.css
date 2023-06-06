@@ -44,9 +44,13 @@ header {
   }
   
   /* Media Query for phone screen levels */
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 850px) {
     .center {
       display: none;
+    }
+    .center.show {
+        display: flex;
+        /* flex-direction: column; */
     }
   
     .right {
@@ -56,6 +60,7 @@ header {
     .hamburger {
       display: block;
       cursor: pointer;
+      padding-left: 15px;
     }
   }
   

@@ -1,19 +1,21 @@
 // Desc: This is the root component of the application
 //       It is the first component to be rendered
 //       It is the parent component of all other components
-
-
-import Header from './components/Header/Header'
-import Footer from './components/Footer/Footer'
-import Body from './components/Body/Body'
+import React from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LandingPage from './pages/LandingPage'
+import LoginPage from './pages/LoginPage'
 
 function App() {
 
   return (
     <>
-      < Header />
-      <Body />
-      <Footer />
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </Router>
     </>
 )}
 

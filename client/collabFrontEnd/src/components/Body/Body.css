@@ -1,24 +1,65 @@
 .App-body {
-    font-size: 1rem;
-    /* border-bottom: 3px solid #e0354b; */
-    /* box-sizing: border-box; */
-    overflow-x: hidden;
-    /* overflow-y: auto; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    background-color:#c4d8f59f;
+}
+.App-body1 {
+    /* font-size: 1rem; */
+    position: relative;
+    /* height: 300px; */
+    /* width: 100%; */
+   
 }
 .Collab-logo{
-    box-sizing: border-box;
-    max-width: 100%;
-    height: 10px;
-    overflow: hidden;
+    width: 100%;
 }
-.HeroText1{
+.App-body1 p{
+    display: inline;
+    position: absolute;
+    font-size: xx-large;
+    font-weight: bold;
+    color: green;
+    z-index: 2;
+    padding: 20px;
+}
+.HeroText1 {
     font-size: 2rem;
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 1rem;
     text-align: center;
 }
-.Hero2{
+.Hero2 {
     display: flex;
     justify-content: space-around;
+}
+.Hero3 {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+}
+.Hero4 {
+    display: flex;
+
+    justify-content: space-around;
+}
+@media only screen and (max-width: 850px) {
+    .App-body1 p{
+        font-size: small;
+    }
+    .Hero2 {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+    .Hero3 {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+    .Hero3 img{
+        padding-top: 20px;
+    }
 }
