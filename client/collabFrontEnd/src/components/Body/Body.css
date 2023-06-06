@@ -1,0 +1,24 @@
+.App-body {
+    font-size: 1rem;
+    /* border-bottom: 3px solid #e0354b; */
+    /* box-sizing: border-box; */
+    overflow-x: hidden;
+    /* overflow-y: auto; */
+}
+.Collab-logo{
+    box-sizing: border-box;
+    max-width: 100%;
+    height: 10px;
+    overflow: hidden;
+}
+.HeroText1{
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.Hero2{
+    display: flex;
+    justify-content: space-around;
+}
