@@ -24,6 +24,11 @@ const UserSchema = new mongoose.Schema({
     minlength: 6,
   },
 
+  groupId: {
+    type: String,
+    required: false,
+  },
+
   createdAt: {
     type: Date,
     default: Date.now,
