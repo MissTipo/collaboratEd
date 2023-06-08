@@ -72,7 +72,7 @@ const authController = {
       req.token = token;
       next();
     } catch (err) {
-      res.status(401).json({ error: 'Unauthorized' });
+      return res.status(401).json({ error: 'Unauthorized' });
     }
   },
 

@@ -24,10 +24,19 @@ const UserSchema = new mongoose.Schema({
     minlength: 6,
   },
 
-  groupId: {
-    type: String,
-    required: false,
-  },
+  groups: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Group',
+      validate: {
+        validator(groups) {
+          return groups.length === new Set(groups).size;
+        },
+        message: 'A user cannot be in the same group twice',
+      },
+    },
+  ],
+  // this will be used to store the group ids of the groups the user belongs to
 
   createdAt: {
     type: Date,
