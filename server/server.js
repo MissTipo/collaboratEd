@@ -1,9 +1,9 @@
-const express = require("express");
-require("dotenv").config();
-const cors = require("cors");
+const express = require('express');
+require('dotenv').config();
+const cors = require('cors');
 
-const mongoose = require("mongoose");
-const socketIO = require("socket.io");
+// const mongoose = require('mongoose');
+// const socketIO = require('socket.io');
 
 const app = express();
 const port = process.env.PORT || 5050;
@@ -11,14 +11,14 @@ const port = process.env.PORT || 5050;
 app.use(cors());
 app.use(express.json());
 
-const userRoutes = require("./routes/userRoutes");
+const userRoutes = require('./routes/userRoutes');
 
 // Connect the user routes
-app.use("/api", userRoutes);
+app.use('/api', userRoutes);
 // Routes
-const groupRoutes = require("./routes/groupRoutes");
+const groupRoutes = require('./routes/groupRoutes');
 
-app.use("/api", groupRoutes);
+app.use('/api', groupRoutes);
 
 // const uri = process.env.ATLAS_URI;
 

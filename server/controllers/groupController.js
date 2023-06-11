@@ -6,7 +6,7 @@ const Resource = require('../models/Resource');
 exports.createGroup = async (req, res) => {
   const { id } = req.user; // id of the user creating the group
   const {
-    name, description, cohort, schedules, location,
+    name, description, cohort, schedules, location, department,
   } = req.body;
   const newGroup = new Group({
     ownerId: id,
@@ -15,6 +15,7 @@ exports.createGroup = async (req, res) => {
     cohort,
     schedules,
     location,
+    department,
   });
   try {
     await newGroup.save();

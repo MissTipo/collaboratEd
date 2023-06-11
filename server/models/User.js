@@ -5,10 +5,12 @@ const mongoose = require('mongoose');
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
+    trim: true,
   },
 
   email: {
     type: String,
+    trim: true,
     required: [true, 'Please provide an email'],
     unique: true, // this will make sure that the email is unique
   },
@@ -16,6 +18,7 @@ const UserSchema = new mongoose.Schema({
   phone: {
     type: Number,
     required: false,
+    trim: true,
   },
 
   password: {
@@ -37,6 +40,12 @@ const UserSchema = new mongoose.Schema({
     },
   ],
   // this will be used to store the group ids of the groups the user belongs to
+
+  cohorts: {
+    type: String,
+    required: false,
+    trim: true,
+  },
 
   createdAt: {
     type: Date,

@@ -8,7 +8,7 @@ const authController = require('../controllers/authController');
 router.get('/stats', userController.getStats);
 
 // register new user
-router.post('/users', userController.newUser);
+router.post('/register', userController.newUser);
 
 // update user profile
 router.put(
@@ -60,6 +60,17 @@ router.get(
   '/users/:id/groups',
   authController.authenticateUser,
   userController.getUserGroups,
+);
+
+// Add Password reset routes
+// Request for password reset
+router.post('/forgot-password', authController.requestPasswordReset);
+
+// Reset password
+router.post(
+  '/reset-password',
+  authController.authenticateUser,
+  authController.resetPassword,
 );
 
 module.exports = router;
