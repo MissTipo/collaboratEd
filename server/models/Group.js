@@ -25,10 +25,10 @@ const groupSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  location: {
+  /*location: {
     type: String,
     required: true,
-  },
+  },*/
   resourceLibrary: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Resource'

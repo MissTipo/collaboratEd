@@ -4,13 +4,13 @@ const Resource = require('../models/Resource')
 
 // Controller for creating a new group
 exports.createGroup = async (req, res) => {
-  const { name, description, cohort, schedules, location } = req.body;
+  const { name, description, cohort, schedules } = req.body;
   const newGroup = new Group({
     name,
     description,
     cohort,
     schedules,
-    location,
+    //location,
   });
   try {
     await newGroup.save();
