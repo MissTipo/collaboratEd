@@ -2,8 +2,8 @@ const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
 
-const mongoose = require('mongoose');
-const socketIO = require('socket.io');
+// const mongoose = require('mongoose');
+// const socketIO = require('socket.io');
 
 const app = express();
 const port = process.env.PORT || 5050;
@@ -14,27 +14,27 @@ app.use(express.json());
 const userRoutes = require('./routes/userRoutes');
 
 // Connect the user routes
-app.use('/', userRoutes);
+app.use('/api', userRoutes);
 // Routes
 const groupRoutes = require('./routes/groupRoutes');
 
 app.use('/api', groupRoutes);
 
-const uri = process.env.ATLAS_URI;
+// const uri = process.env.ATLAS_URI;
 
-mongoose.connect(uri);
-const connection = mongoose.connection;
-connection.once('open', () => {
-  console.log("MongoDB database connection established")
-})
+// mongoose.connect(uri);
+// const connection = mongoose.connection;
+// connection.once('open', () => {
+// console.log("MongoDB database connection established")
+// })
 
-const server = app.listen(port, () => {
+app.listen(port, () => {
   console.log(`Listening on port ${port}`);
-
-})
+});
 
 // Socket.io integration
 
+/**
 const io = socketIO(server);
 
 io.on('connection', (socket) => {
@@ -50,3 +50,5 @@ io.on('connection', (socket) => {
     io.emit('forum message', message)
   });
 });
+
+*/

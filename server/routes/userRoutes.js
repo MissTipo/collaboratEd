@@ -7,27 +7,70 @@ const authController = require('../controllers/authController');
 // get all users
 router.get('/stats', userController.getStats);
 
-// User authentication routes
-router.post('/register', userController.newUser); // register new user
+// register new user
+router.post('/register', userController.newUser);
 
+// update user profile
 router.put(
-  '/update',
+  '/users',
   authController.authenticateUser,
   userController.updateUser,
-); // update user
+);
 
-router.get('/login', authController.loginUser); // login user
+// login user
+router.get('/login', authController.loginUser);
 
+// get user profile
 router.get(
   '/users/me',
   authController.authenticateUser,
   authController.getUser,
-); // get user profile
+);
 
+// logout user
 router.get(
   '/logout',
   authController.authenticateUser,
   authController.logoutUser,
-); // logout user
+);
+
+// delete user
+router.delete(
+  '/users/:id',
+  authController.authenticateUser,
+  userController.deleteUser,
+);
+
+// Add user to a group
+router.post(
+  '/join/:groupId',
+  authController.authenticateUser,
+  userController.addUserToGroup,
+);
+
+// Remove user from a group
+router.delete(
+  '/leave/:groupId',
+  authController.authenticateUser,
+  userController.removeUserFromGroup,
+);
+
+// get all groups for a user
+router.get(
+  '/users/groups',
+  authController.authenticateUser,
+  userController.getUserGroups,
+);
+
+// Add Password reset routes
+// Request for password reset
+router.post('/forgot-password', authController.requestPasswordReset);
+
+// Reset password
+router.post(
+  '/reset-password',
+  authController.authenticateUser,
+  authController.resetPassword,
+);
 
 module.exports = router;

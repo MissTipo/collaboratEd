@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const resourceSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -16,6 +17,13 @@ const resourceSchema = new mongoose.Schema({
   },
   tags: {
     type: [String],
+    required: true,
+  },
+
+  // Owner of the resource
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
 });

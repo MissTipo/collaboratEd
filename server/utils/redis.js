@@ -1,5 +1,7 @@
 // RedisClient class
-import { createClient } from 'redis';
+const redis = require('redis');
+
+const { createClient } = redis;
 
 // Create a redis class
 class RedisClient {
