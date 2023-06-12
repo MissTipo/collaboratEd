@@ -15,6 +15,11 @@ const groupSchema = new mongoose.Schema({
     required: true,
   },
 
+  department: {
+    type: String,
+    required: true,
+  },
+
   // Owner of the group
   ownerId: {
     type: mongoose.Schema.Types.ObjectId,
