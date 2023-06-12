@@ -2,11 +2,13 @@ const Resource = require('../models/Resource');
 
 // upload resource
 exports.uploadResource = async (req, res) => {
+  const userId = req.user._id;
   try {
     const {
       title, description, link, tags,
     } = req.body;
     const newResource = new Resource({
+      userId,
       title,
       description,
       link,
@@ -51,7 +53,10 @@ exports.updateResource = async (req, res) => {
     const updatedResource = await Resource.findByIdAndUpdate(
       req.params.id,
       {
-        title, description, link, tags,
+        title,
+        description,
+        link,
+        tags,
       },
       { new: true },
     );

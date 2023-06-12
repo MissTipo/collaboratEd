@@ -1,12 +1,12 @@
 // Authcontroller for authorization
 
 // const User = require("../models/user");
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
 const db = require('../utils/db');
 const redisClient = require('../utils/redis');
 require('dotenv').config();
-const nodemailer = require('nodemailer');
 
 const jwtSecret = process.env.JWT_SECRET;
 
@@ -22,12 +22,15 @@ const authController = {
     try {
       // Check for existing user
       const user = await db.User.findOne({ email });
+
+      // Get hashed password from database
+      const hashedPass = await db.User.findOne({ email }, { password: 1 });
       if (!user) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
 
       // Validate password
-      const isMatch = await bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(password, hashedPass.password);
       if (!isMatch) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
@@ -46,7 +49,7 @@ const authController = {
         },
       });
     } catch (err) {
-      return res.status(500).json({ error: 'InternalServerError' });
+      return res.status(500).json({ error: 'InternalServerError', err });
     }
   },
 
@@ -119,6 +122,9 @@ const authController = {
     const { email } = req.body;
     const nodemailPass = process.env.NODEMAIL_PASS;
     const nodemailUser = process.env.NODEMAIL_USER;
+    if (!email) {
+      return res.status(404).json({ error: 'missing email' });
+    }
 
     try {
       const user = await db.User.findOne({ email });

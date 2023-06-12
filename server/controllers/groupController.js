@@ -1,6 +1,7 @@
 const Group = require('../models/Group');
 const resourceController = require('./resourceController');
 const Resource = require('../models/Resource');
+// const { ObjectId } = require('mongoose').Types;
 
 // Controller for creating a new group
 exports.createGroup = async (req, res) => {
@@ -17,6 +18,10 @@ exports.createGroup = async (req, res) => {
     location,
     department,
   });
+
+  // update the new group member to include the owner
+  newGroup.members.push(id);
+
   try {
     await newGroup.save();
     res.status(201).json(newGroup);
@@ -54,7 +59,8 @@ exports.updateGroup = async (req, res) => {
   try {
     // Check if the user initiating the update is the owner of the group
     const group = await Group.findById(req.params.id);
-    if (group.ownerId !== id) {
+
+    if (group.ownerId.valueOf() !== id) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
     const updatedGroup = await Group.findByIdAndUpdate(
@@ -90,13 +96,20 @@ exports.addResourceToLibrary = async (req, res) => {
     const {
       groupId, title, link, description, tags,
     } = req.body;
+    const userId = req.user._id;
+
+    // Create the resource and save it to the database
     const newResource = await Resource({
+      userId,
       title,
       link,
       description,
       tags,
     });
+
     await newResource.save();
+
+    // Update the group's resource library
     const updatedGroup = await Group.findByIdAndUpdate(
       groupId,
       { $push: { resourceLibrary: newResource._id } },

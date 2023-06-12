@@ -24,19 +24,13 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minlength: 6,
+    select: false, // this will make sure that the password is not sent in the response
   },
 
   groups: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Group',
-      validate: {
-        validator(groups) {
-          return groups.length === new Set(groups).size;
-        },
-        message: 'A user cannot be in the same group twice',
-      },
     },
   ],
   // this will be used to store the group ids of the groups the user belongs to

@@ -57,7 +57,7 @@ router.delete(
 
 // get all groups for a user
 router.get(
-  '/users/:id/groups',
+  '/users/groups',
   authController.authenticateUser,
   userController.getUserGroups,
 );

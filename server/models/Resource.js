@@ -19,6 +19,13 @@ const resourceSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
+
+  // Owner of the resource
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('Resource', resourceSchema);
