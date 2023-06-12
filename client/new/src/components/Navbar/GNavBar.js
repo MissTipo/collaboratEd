@@ -1,9 +1,10 @@
-import { AppBar, Box, Button, Container, IconButton, InputBase, Toolbar, Typography } from '@mui/material'
-import { Lock, Menu, Search } from '@mui/icons-material'
+import { AppBar, Box, Button, Container, IconButton, Toolbar, Typography } from '@mui/material'
+import { Lock } from '@mui/icons-material'
 import React from 'react'
 // import photoURL from '../mypic.jpeg'
-import { useValue } from '../context/contextProvider'
-import UserIcons from './user/UserIcons'
+import { useValue } from '../../context/contextProvider'
+import UserIcons from '../user/UserIcons'
+import './Header.css';
 
 // const user = {name:'test', photoURL}
 
@@ -17,7 +18,7 @@ const NavBar = () => {
             <Toolbar disableGutters>
                 <Box sx={{mr:1}}>
                     <IconButton size='large' color='inherit'>
-                        <Menu />
+                        {/* <Menu /> */}
                     </IconButton>
                 </Box>
                 <Typography
@@ -36,7 +37,18 @@ const NavBar = () => {
                 >
                     CollaboratEd
                 </Typography>
-                <Search sx={{width: '30%', backgroundColor: 'white', borderRadius: '2rem'}}><InputBase placeholder='search...'></InputBase> </Search>
+                <div className="center">
+                <nav>
+                    <ul>
+                        <li>How it works</li>
+                        <li>Community</li>
+                        <li>Dashboard</li>
+                    </ul>
+                </nav>
+                </div>
+             
+                <Box sx={{flexGrow:1}} />
+                
                 {!currentUser ? (<Button color="inherit" startIcon={<Lock />} onClick={()=> dispatch({type:'OPEN_LOGIN',})}>
                     Login
                 </Button>) :  (

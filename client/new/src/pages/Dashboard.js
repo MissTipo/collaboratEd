@@ -1,16 +1,12 @@
 import React from 'react'
 import Sidebar from "../components/dashboard/Sidebar";
-import Feed from "../components/dashboard/Feed";
+// import Feed from "../components/dashboard/Feed";
 import Rightbar from "../components/dashboard/Rightbar";
 import { Box, createTheme, Stack, ThemeProvider } from "@mui/material";
-// import Navbar from "./components/Navbar";
-import GNavBar from "../components/GNavBar";
-import Login from "../components/user/Login";
-import Notification from "../components/Notification";
-import Loading from "../components/Loading";
-import Add from "../components/dashboard/Add";
+// import Add from "../components/dashboard/Add";
 import { useState } from "react";
-import Footer from '../components/Footer/Footer';
+// import Footer from '../components/Footer/Footer';
+import MiddleBar from '../components/dashboard/middlebar';
 
 
 const Dashboard = () => {
@@ -24,18 +20,13 @@ const Dashboard = () => {
     return (
       <ThemeProvider theme={darkTheme}>
         <Box bgcolor={"background.default"} color={"text.primary"}>
-          {/* <Navbar /> */}
-          <Loading />
-          <Login />
-          <Notification />
-          <GNavBar />
           <Stack direction="row" spacing={2} justifyContent="space-between">
-          <Sidebar setMode={setMode} mode={mode}/>
-            <Feed />
+            <Sidebar setMode={setMode} mode={mode}/>
+            <MiddleBar />
             <Rightbar />
           </Stack>
-          <Add />
-          <Footer/>
+          {/* <Add /> */}
+          {/* <Footer/> */}
         </Box>
       </ThemeProvider>
     );
