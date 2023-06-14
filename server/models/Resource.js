@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const resourceSchema = new mongoose.Schema({
   title: {
@@ -21,11 +21,11 @@ const resourceSchema = new mongoose.Schema({
   },
 
   // Owner of the resource
-  userId: {
+  ownerId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
     required: true,
   },
 });
 
-module.exports = mongoose.model('Resource', resourceSchema);
+module.exports = mongoose.model("Resource", resourceSchema);
