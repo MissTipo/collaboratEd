@@ -19,7 +19,12 @@ const communityPage = () => {
             <List sx={{ width:'100%'}}>
                 <Typography variant='h5'>Departments</Typography>
                 <Stack sx={{display:'flex', borderBottom:'2px solid', justifyContent:'space-evenly'}} direction='row'>
-                    
+                    <List>
+                        <ListItem sx={{display:'flex', flexDirection:'column'}}>
+                            <img src={Dimg3} alt="SE "></img>
+                            <ListItemText primary="Software Engineering" />
+                        </ListItem>
+                    </List>
                     <List >
                         <ListItem sx={{display:'flex', flexDirection:'column'}}>
                             <img src={Dimg1} alt="Computer Science"></img>
@@ -32,12 +37,7 @@ const communityPage = () => {
                             <ListItemText primary="Data Science" />
                         </ListItem>
                     </List>
-                    <List>
-                        <ListItem sx={{display:'flex', flexDirection:'column'}}>
-                            <img src={Dimg3} alt="Digital "></img>
-                            <ListItemText primary="Digital Marketing" />
-                        </ListItem>
-                    </List>
+                    
                     <ArrowForwardIosIcon sx={{fontSize:'large', alignSelf:'center'}}/>
                 </Stack>
                 <br/>
