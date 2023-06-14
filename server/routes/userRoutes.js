@@ -18,7 +18,7 @@ router.put(
 );
 
 // login user
-router.get('/login', authController.loginUser);
+router.post('/login', authController.loginUser);
 
 // get user profile
 router.get(
