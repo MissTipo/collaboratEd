@@ -12,7 +12,7 @@ import { Faq } from '../components/Faq/Faq';
 
 const Home = () => {
     return (
-        <Box>
+        <Box sx={{bgcolor:'#c4d8f59f'}}>
         
           <Loading />
           <Login />

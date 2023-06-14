@@ -29,8 +29,8 @@ const Body = () => {
           <img src={ HeroImg2 } alt="" />
         </div>
         <div>
-          <h2 className='HeroText1'>Our Community</h2>
-          <hr className='HeroLine1' />
+          {/* <h2 className='HeroText1'>Our Community</h2> */}
+          {/* <hr className='HeroLine1' /> */}
         </div>
         <div className='Hero3'>
           <div>
@@ -41,8 +41,8 @@ const Body = () => {
             <h2 className='HeroText2'>Find your collaborative <br></br><span>Haven!</span></h2>
             <h4 className='HeroText3'>Register a new peer learning group, 
             <br></br>or join an existing one.</h4>
-            <Button text="Create group" onClick={() => alert('Create Group button clicked')} ></Button>
-            <Button text="Join Existing" onClick={() => alert('Join Existing button clicked')}></Button>
+            {/* <Button text="Create group" onClick={() => alert('Create Group button clicked')} ></Button> */}
+            <Button text="Get Started " onClick={() => alert('Join Existing button clicked')}></Button>
           </div>
           <img src={ HeroImg3 } alt="" />
         </div>
