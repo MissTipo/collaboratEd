@@ -1,3 +1,4 @@
+// Login component
 import { Close, Send } from '@mui/icons-material';
 import {
   Button,
