@@ -35,19 +35,32 @@ router.delete(
   groupController.deleteGroup,
 );
 
-// Add a resource to group's library
-router.post('/group/:id/resource', groupController.addResourceToLibrary);
-
-// Remove a resource from group's library
-router.delete(
-  '/group/:id/resource/:resourceId',
-  groupController.deleteResource,
+// Add a resource to group's library by a verified user
+router.post(
+  '/group/:groupId/resource',
+  authController.authenticateUser,
+  groupController.addResourceToLibrary,
 );
 
 // Get all resources from group's library
-router.get('/group/:id/resources', groupController.getResources);
+router.get(
+  '/group/:groupId/resources',
+  authController.authenticateUser,
+  groupController.getResources,
+);
 
 // Update a resource from group's library
-router.put('/group/:id/resource/:resourceId', groupController.updateResource);
+router.put(
+  '/group/:groupId/resource/:resourceId',
+  authController.authenticateUser,
+  groupController.updateResource,
+);
+
+// Remove a resource from group's library
+router.delete(
+  '/group/:groupId/resource/:resourceId',
+  authController.authenticateUser,
+  groupController.deleteResource,
+);
 
 module.exports = router;
