@@ -179,8 +179,8 @@ const userController = {
 
       // filter and return some details for each group
       const filteredGroups = groupsDetails.map((group) => ({
-        id: group._id,
         name: group.name,
+        description: group.description,
         cohort: group.cohort,
         department: group.department,
       }));
