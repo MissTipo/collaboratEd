@@ -1,6 +1,12 @@
 // RedisClient class
+<<<<<<< HEAD
 const { createClient } = require('redis');
 // import { createClient } from 'redis';
+=======
+const redis = require('redis');
+
+const { createClient } = redis;
+>>>>>>> c7595248997f2f23db2d0904a3a5cba60516faff
 
 // Create a redis class
 class RedisClient {

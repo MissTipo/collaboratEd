@@ -2,9 +2,13 @@ const Resource = require('../models/Resource');
 
 // upload resource
 exports.uploadResource = async (req, res) => {
+  const userId = req.user._id;
   try {
-    const { title, description, link, tags } = req.body;
+    const {
+      title, description, link, tags,
+    } = req.body;
     const newResource = new Resource({
+      userId,
       title,
       description,
       link,
@@ -32,7 +36,7 @@ exports.getResourceById = async (req, res) => {
   try {
     const resource = await Resource.findById(req.params.id);
     if (!resource) {
-      return res.status(404).json({ message: 'resource not found/' })
+      return res.status(404).json({ message: 'resource not found/' });
     }
     res.status(200).json(resource);
   } catch (error) {
@@ -43,14 +47,21 @@ exports.getResourceById = async (req, res) => {
 // update resource
 exports.updateResource = async (req, res) => {
   try {
-    const { title, description, link, tags } = req.body;
+    const {
+      title, description, link, tags,
+    } = req.body;
     const updatedResource = await Resource.findByIdAndUpdate(
       req.params.id,
-      { title, description, link, tags },
-      { new: true }
+      {
+        title,
+        description,
+        link,
+        tags,
+      },
+      { new: true },
     );
     if (!updatedResource) {
-      return res.status(404).json({ message: 'resource not found/' })
+      return res.status(404).json({ message: 'resource not found/' });
     }
     res.status(200).json({ message: 'resource updated successfully' });
   } catch (error) {
@@ -63,7 +74,7 @@ exports.deleteResource = async (req, res) => {
   try {
     const deletedResource = await Resource.findByIdAndDelete(req.params.id);
     if (!deletedResource) {
-      return res.status(404).json({ message: 'resource not found/' })
+      return res.status(404).json({ message: 'resource not found/' });
     }
     res.status(200).json({ message: 'resource deleted successfully' });
   } catch (error) {

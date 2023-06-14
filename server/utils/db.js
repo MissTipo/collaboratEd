@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose');
 const User = require('../models/User');
+const Group = require('../models/Group');
 
 class Database {
   constructor() {
@@ -19,6 +20,9 @@ class Database {
 
     // the user model
     this.User = User;
+
+    // the group model
+    this.Group = Group;
   }
 
   // close the database connection
