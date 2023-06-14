@@ -40,9 +40,24 @@ const authController = {
         expiresIn: 3600,
       });
 
+      // Get the name of the group the user belongs to using populate
+      const groups = await user.populate('groups', {
+        name: 1,
+        description: 1,
+        cohort: 1,
+        department: 1,
+        _id: 0,
+      });
+
       return res.status(200).json({
         token,
-        user,
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          groups,
+        },
+        // {...user, groups},
       });
     } catch (err) {
       return res.status(500).json({ error: 'InternalServerError', err });
