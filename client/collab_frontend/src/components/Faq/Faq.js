@@ -27,7 +27,7 @@ export function Faq() {
   const { classes } = useStyles();
   return (
     <div className={classes.wrapper}>
-      <Container size="lg">
+      <Container size="lg" >
         <Grid id="faq-grid" gutter={50}>
           <Col span={12} md={6}>
             <Image src={image} alt="Frequently Asked Questions" />

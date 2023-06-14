@@ -1,12 +1,10 @@
 import { AppBar, Box, Button, Container, IconButton, Toolbar, Typography } from '@mui/material'
 import { Lock } from '@mui/icons-material'
 import React from 'react'
-// import photoURL from '../mypic.jpeg'
+import { Link } from 'react-router-dom';
 import { useValue } from '../../context/contextProvider'
 import UserIcons from '../user/UserIcons'
 import './Header.css';
-
-// const user = {name:'test', photoURL}
 
 const NavBar = () => {
 
@@ -40,9 +38,9 @@ const NavBar = () => {
                 <div className="center">
                 <nav>
                     <ul>
-                        <li>How it works</li>
-                        <li>Community</li>
-                        <li>Dashboard</li>
+                        <li><Link to='/how' style={{ textDecoration: 'none', color: 'white' }}>How it works</Link></li>
+                        <li><Link to='/community'style={{ textDecoration: 'none', color: 'white' }}>Community</Link></li>
+                        <li><Link to='/dashboard' style={{ textDecoration: 'none', color: 'white' }}>Dashboard</Link></li>
                     </ul>
                 </nav>
                 </div>
