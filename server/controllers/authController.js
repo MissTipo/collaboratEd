@@ -9,6 +9,7 @@ const redisClient = require('../utils/redis');
 require('dotenv').config();
 
 const jwtSecret = process.env.JWT_SECRET;
+const jwtExpire = Number(process.env.JWT_EXPIRES_IN);
 
 const authController = {
   // Login user and return JWT token
@@ -37,7 +38,7 @@ const authController = {
 
       // Create the jwt token
       const token = jwt.sign({ id: user._id }, jwtSecret, {
-        expiresIn: 3600,
+        expiresIn: jwtExpire,
       });
 
       // Get the name of the group the user belongs to using populate
@@ -57,7 +58,6 @@ const authController = {
           email: user.email,
           groups,
         },
-        // {...user, groups},
       });
     } catch (err) {
       return res.status(500).json({ error: 'InternalServerError', err });
@@ -104,6 +104,13 @@ const authController = {
           id: user._id,
           name: user.name,
           email: user.email,
+          groups: await user.populate('groups', {
+            name: 1,
+            description: 1,
+            cohort: 1,
+            department: 1,
+            _id: 0,
+          }),
         },
       });
     } catch (err) {
@@ -120,7 +127,7 @@ const authController = {
         return res.status(401).json({ error: 'Unauthorized' });
       }
       // Add the token to the blacklist
-      redisClient.set(req.token, id, 3600);
+      redisClient.set(req.token, id, jwtExpire);
 
       return res.status(200).json({ message: 'Logout successful' });
     } catch (err) {
