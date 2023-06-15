@@ -31,7 +31,7 @@ exports.createGroup = async (req, res) => {
 };
 
 // Controller for getting all groups
-exports.getGroups = async (_, res) => {
+exports.getGroups = async (req, res) => {
   try {
     const groups = await Group.find();
     res.status(200).json(groups);
@@ -43,7 +43,16 @@ exports.getGroups = async (_, res) => {
 // Controller for getting a single group
 exports.getGroupById = async (req, res) => {
   try {
-    const group = await Group.findById(req.params.id);
+    const group = await Group.findById(req.params.id)
+      .populate({
+        path: 'members',
+        select: 'name email -_id',
+      })
+      .populate({
+        path: 'resourceLibrary',
+        select: 'title link description tags -_id',
+      });
+
     res.status(200).json(group);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -106,6 +115,13 @@ exports.addResourceToLibrary = async (req, res) => {
     }
 
     const ownerId = req.user.id;
+
+    // Check if the user is a member of the group
+    const group = await Group.findById(groupId);
+
+    if (!group.members.includes(ownerId)) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
 
     // Create the resource and save it to the database
     const newResource = await Resource({
@@ -174,7 +190,6 @@ exports.updateResource = async (req, res) => {
     if (!updatedResource) {
       res.status(404).json({ message: 'Resource not found' });
     }
-
     res.status(200).json('Successfully updated resource');
   } catch (error) {
     res.status(404).json({ message: error.message });
