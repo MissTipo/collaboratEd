@@ -8,7 +8,7 @@ import Dimg3 from '../assets/SE_Img.png'
 
 const communityPage = () => {
   return (
-    <Box >
+    <Box p={5} >
         <Box sx={{display:'flex', justifyContent:'center', alignItems:'center'}}>
             <Typography><h1 style={{borderBottom:'2px solid'}}>Welcome To CollaboratEd Community!</h1></Typography>
         </Box>

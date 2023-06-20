@@ -1,29 +1,31 @@
-import { Box } from '@mui/material'
-import { Stack } from '@mui/system'
-import React from 'react'
-import Calendar from '../components/GroupPage/Calendar'
-import Chat from '../components/GroupPage/Chat'
-import Projects from '../components/GroupPage/Projects'
-import Recordings from '../components/GroupPage/Recordings'
-import ResourceLibrary from '../components/GroupPage/ResourceLibrary'
+import React from 'react';
+import {  Outlet } from 'react-router-dom';
+import Topbar from '../components/GroupPage/scenes/global/topbar';
+import Sidebar from '../components/GroupPage/scenes/global/sidebar';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { ColorModeContext, useMode } from '../theme';
 
 
-const GroupPage = () => {
+function GroupPage() {
+  const [theme, colorMode] = useMode();
+  const [isSidebar, setIsSidebar] = React.useState(true);
+
   return (
-    <Box>
-        <Box sx={{display:'flex',  justifyContent:'center', alignItems:'center', bgcolor:'skyblue', height:'15%'}}> GroupPage NavBar</Box>
-        <Stack direction='rows'>
-            <Stack sx={{bgcolor:'skyblue', height:'100vh'}} spacing={5}>
-                <Projects/>
-                <ResourceLibrary/>
-                <Calendar/>
-                <Recordings/>
-                <Chat/>
-            </Stack>
-        </Stack>
-        
-    </Box>
-  )
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <div className="app">
+          <Topbar setIsSidebar={setIsSidebar} />
+          <div className="sidebar-and-content" style={{display:'flex'}}>
+            <Sidebar isSidebar={isSidebar} />
+            <main className="content" style={{width:'100%'}}>
+              <Outlet />
+            </main>
+          </div>
+        </div>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
+  );
 }
 
-export default GroupPage
+export default GroupPage;
