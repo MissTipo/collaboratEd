@@ -11,6 +11,8 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
+import ChatIcon from '@mui/icons-material/Chat';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import Hero1 from '../../../../assets/Hero1.png';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -103,7 +105,7 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  UserName
+                  Group Name
                 </Typography>
               </Box>
             </Box>
@@ -152,6 +154,20 @@ const Sidebar = () => {
               title="Community"
               to="community"
               icon={<ConnectWithoutContactIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Channel"
+              to="channel"
+              icon={<ChatIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Resoucre Library"
+              to="resource"
+              icon={<LibraryBooksIcon  />}
               selected={selected}
               setSelected={setSelected}
             />

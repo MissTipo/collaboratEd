@@ -15,8 +15,31 @@ const communityPage = () => {
         
         <Stack style={{justifyContent:'center', alignItems:'center'}}>
 
-        
+            
             <List sx={{ width:'100%'}}>
+            <Typography variant='h5'>Institutions</Typography>
+                <Stack sx={{display:'flex', borderBottom:'2px solid', justifyContent:'space-evenly'}} direction='row'>
+                    <List>
+                        <ListItem sx={{display:'flex', flexDirection:'column'}}>
+                            <img src={Dimg3} alt="SE "></img>
+                            <ListItemText primary="ALX" />
+                        </ListItem>
+                    </List>
+                    <List >
+                        <ListItem sx={{display:'flex', flexDirection:'column'}}>
+                            <img src={Dimg1} alt="UniLag"></img>
+                            <ListItemText primary="University Of Lagos" />
+                        </ListItem>
+                    </List>
+                    <List >
+                        <ListItem sx={{display:'flex', flexDirection:'column'}}>
+                            <img src={Dimg2} alt="Data Science"></img>
+                            <ListItemText primary="Microverse" />
+                        </ListItem>
+                    </List>
+                    
+                    <ArrowForwardIosIcon sx={{fontSize:'large', alignSelf:'center'}}/>
+                </Stack>
                 <Typography variant='h5'>Departments</Typography>
                 <Stack sx={{display:'flex', borderBottom:'2px solid', justifyContent:'space-evenly'}} direction='row'>
                     <List>

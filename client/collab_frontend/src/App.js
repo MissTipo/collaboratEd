@@ -9,6 +9,10 @@ import Team from './components/GroupPage/scenes/team';
 import Contacts from './components/GroupPage/scenes/contacts';
 import Form from './components/GroupPage/scenes/form';
 import Calendar from './components/GroupPage/scenes/calendar';
+import GroupDashboard from './pages/groupDashboard';
+import Channel from './components/GroupDash/scenes/channels';
+// import Resource from './components/GroupPage/scenes/resource';
+import GDashboard from './components/GroupDash/scenes/dashboard';
 
 function App() {
 
@@ -28,6 +32,16 @@ function App() {
             <Route path="form" element={<Form/>} />
             <Route path="contacts" element={<Contacts/>} />
             <Route path='community' element={<Community/>} />
+          </Route>
+          <Route path="/groupDashboard" element={<GroupDashboard/>} >
+            <Route path="" element={<GDashboard/>} />
+            <Route path="team" element={<Team/>} />
+            <Route path="calendar" element={<Calendar/>} />
+            <Route path="form" element={<Form/>} />
+            <Route path="contacts" element={<Contacts/>} />
+            <Route path='community' element={<Community/>} />
+            <Route path='channel' element={<Channel/>} />
+            {/* <Route path='resource' element={<ResourceLibrary/>} /> */}
           </Route>
         </Routes>
       </Router>
