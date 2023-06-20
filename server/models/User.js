@@ -41,6 +41,20 @@ const UserSchema = new mongoose.Schema({
     trim: true,
   },
 
+  // for profile picture response link
+  pictureUrl: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+
+  // cloudinaryId, for update and deletion
+  cloudinaryId: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+
   createdAt: {
     type: Date,
     default: Date.now,
