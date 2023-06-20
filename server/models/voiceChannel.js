@@ -9,6 +9,10 @@ const voiceChannelSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  channelType: {
+    type: String,
+    required: true,
+  },
   participants: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
