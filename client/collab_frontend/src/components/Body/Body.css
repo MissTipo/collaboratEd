@@ -10,6 +10,9 @@
     position: relative;
     /* height: 300px; */
     /* width: 100%; */
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
    
 }
 .Collab-logo{
@@ -17,12 +20,19 @@
 }
 .App-body1 p{
     display: inline;
-    position: absolute;
+    /* position: absolute; */
     font-size: xx-large;
     font-weight: bold;
     color: green;
     z-index: 2;
     padding: 20px;
+    padding-top: 120px;
+}
+.App-body1 img{
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    /* opacity: 0.5; */
 }
 .HeroText1 {
     font-size: 2rem;
@@ -46,9 +56,13 @@
     justify-content: space-around;
 }
 @media only screen and (max-width: 850px) {
-    .App-body1 p{
-        font-size: small;
+    .App-body1 {
+        flex-direction: column;
     }
+    
+    /* .App-body1 p{
+         font-size: small; 
+    } */
     .Hero2 {
         display: flex;
         flex-direction: column;

@@ -135,7 +135,7 @@ const Sidebar = () => {
             /> */}
 
             <Item
-              title="Profile Form"
+              title="Create Group"
               to="form"
               icon={<PersonOutlinedIcon />}
               selected={selected}
