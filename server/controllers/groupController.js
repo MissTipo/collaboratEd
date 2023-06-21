@@ -1,3 +1,6 @@
+// Group controller
+
+const db = require('../utils/db');
 const Group = require('../models/Group');
 const resourceController = require('./resourceController');
 const Resource = require('../models/Resource');
@@ -19,11 +22,22 @@ exports.createGroup = async (req, res) => {
     department,
   });
 
-  // update the new group member to include the owner
+  // update the members of new group to include the owner
   newGroup.members.push(id);
+
+  // update the user to include the new group
+  await db.User.findOneAndUpdate(
+    { _id: id },
+    { $push: { groups: newGroup._id } },
+    { new: true },
+  );
 
   try {
     await newGroup.save();
+
+    // populate the group with the members
+    await newGroup.populate('members', 'name email -_id');
+
     res.status(201).json(newGroup);
   } catch (error) {
     res.status(409).json({ message: error.message });

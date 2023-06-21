@@ -41,23 +41,15 @@ const authController = {
         expiresIn: jwtExpire,
       });
 
-      // Get the name of the group the user belongs to using populate
-      const groups = await user.populate('groups', {
-        name: 1,
-        description: 1,
-        cohort: 1,
-        department: 1,
-        _id: 0,
-      });
-
+      // Send the token to the client and populate groups belonging to the user
       return res.status(200).json({
         token,
-        user: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          // groups,
-        },
+        user: await user.populate('groups', {
+          name: 1,
+          description: 1,
+          cohort: 1,
+          department: 1,
+        }),
       });
     } catch (err) {
       return res.status(500).json({ error: 'InternalServerError', err });
@@ -100,18 +92,12 @@ const authController = {
         return res.status(401).json({ error: 'Unauthorized' });
       }
       return res.status(200).json({
-        user: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          groups: await user.populate('groups', {
-            name: 1,
-            description: 1,
-            cohort: 1,
-            department: 1,
-            _id: 0,
-          }),
-        },
+        user: await user.populate('groups', {
+          name: 1,
+          description: 1,
+          cohort: 1,
+          department: 1,
+        }),
       });
     } catch (err) {
       return res.status(500).json({ error: 'InternalServerError' });

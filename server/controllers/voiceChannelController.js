@@ -9,16 +9,16 @@ const createVoiceChannel = async (req, res) => {
   try {
     const { name, channelType } = req.body;
     const voiceChannel = await VoiceChannel.create({
-      name: name,
-      channelType: channelType,
-      group: req.params.groupId
+      name,
+      channelType,
+      group: req.params.groupId,
     });
     res.status(201).json(voiceChannel);
     voiceChannel.save();
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // Join voice channel
 const joinVoiceChannel = async (req, res) => {
@@ -44,7 +44,7 @@ const joinVoiceChannel = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // Share screen in voice channel
 const shareScreen = async (req, res) => {
@@ -68,8 +68,7 @@ const shareScreen = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
-
+};
 
 // leave voice channel
 const leaveVoiceChannel = async (req, res) => {
@@ -92,7 +91,7 @@ const leaveVoiceChannel = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // get all voice channels
 const getAllVoiceChannels = async (_, res) => {
@@ -102,7 +101,7 @@ const getAllVoiceChannels = async (_, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // get voice channel by id
 const getVoiceChannelById = async (req, res) => {
@@ -116,6 +115,8 @@ const getVoiceChannelById = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
 
-module.exports = { createVoiceChannel, getAllVoiceChannels, getVoiceChannelById, joinVoiceChannel, leaveVoiceChannel, shareScreen };
+module.exports = {
+  createVoiceChannel, getAllVoiceChannels, getVoiceChannelById, joinVoiceChannel, leaveVoiceChannel, shareScreen,
+};
