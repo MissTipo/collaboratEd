@@ -1,7 +1,10 @@
 // User controller
 
 const bcrypt = require('bcrypt');
+const fs = require('fs');
 const db = require('../utils/db');
+const cloudinary = require('../utils/cloudinary');
+
 // define the userController object
 
 const userController = {
@@ -188,6 +191,73 @@ const userController = {
       return res.status(201).json(filteredGroups);
     } catch (err) {
       return res.status(500).json({ error: 'Unauthorized' });
+    }
+  },
+
+  // Upload profile picture to cloudinary
+  async uploadProfilePicture(req, res) {
+    const { id } = req.user;
+    const { file } = req;
+    try {
+      const user = await db.User.findOne({ _id: id });
+      if (!user) {
+        return res.status(400).json({ error: 'User does not exist' });
+      }
+
+      // Upload the image to cloudinary
+      const uploadedImage = await cloudinary.uploader.upload(file.path);
+
+      // Delete file from local folder
+      fs.unlink(req.file.path, (err) => {
+        if (err) {
+          console.error('File deletion error:', err);
+        }
+      });
+
+      // Delete previous image from cloudinary
+      if (user.cloudinaryId) {
+        await cloudinary.uploader.destroy(user.cloudinaryId);
+      }
+
+      // Get the image url and public id
+      const update = {
+        pictureUrl: uploadedImage.secure_url,
+        cloudinaryId: uploadedImage.public_id,
+      };
+
+      // Update the user with the new update
+      const updatedUser = await db.User.findOneAndUpdate(
+        { _id: id },
+        { $set: update },
+        { new: true },
+      );
+      return res.status(201).json(updatedUser);
+    } catch (err) {
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  },
+
+  // Delete profile picture from cloudinary and update user
+  async deleteProfilePicture(req, res) {
+    const { id } = req.user;
+    try {
+      const user = await db.User.findOne({ _id: id });
+      if (!user) {
+        return res.status(400).json({ error: 'User does not exist' });
+      }
+
+      // Delete the image from cloudinary
+      await cloudinary.uploader.destroy(user.cloudinaryId);
+
+      // Update the user with the new update
+      const updatedUser = await db.User.findOneAndUpdate(
+        { _id: id },
+        { $set: { pictureUrl: '', cloudinaryId: '' } },
+        { new: true },
+      );
+      return res.status(201).json(updatedUser);
+    } catch (err) {
+      return res.status(500).json({ error: 'Internal server error' });
     }
   },
 };

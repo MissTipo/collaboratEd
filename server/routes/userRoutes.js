@@ -73,4 +73,21 @@ router.post(
   authController.resetPassword,
 );
 
+const upload = require('../utils/multer');
+
+// Upload profile picture
+router.post(
+  '/upload/user',
+  authController.authenticateUser,
+  upload,
+  userController.uploadProfilePicture,
+);
+
+// Delete profile picture
+router.delete(
+  '/upload/user',
+  authController.authenticateUser,
+  userController.deleteProfilePicture,
+);
+
 module.exports = router;
