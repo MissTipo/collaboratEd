@@ -88,11 +88,6 @@ export function Faq() {
                 <Accordion.Panel>{placeholder}</Accordion.Panel>
               </Accordion.Item>
 
-              <Accordion.Item className={classes.item} value="newsletter">
-                <Accordion.Control>How can I subscribe to monthly newsletter?</Accordion.Control>
-                <Accordion.Panel>{placeholder}</Accordion.Panel>
-              </Accordion.Item>
-
               <Accordion.Item className={classes.item} value="free">
                 <Accordion.Control>Is CollaboratEd free to use?</Accordion.Control>
                 <Accordion.Panel>
