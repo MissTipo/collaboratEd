@@ -20,6 +20,11 @@ const groupRoutes = require('./routes/groupRoutes');
 
 app.use('/api', groupRoutes);
 
+// Channel routes
+const channel = require('./routes/voiceChannelRoutes');
+
+app.use('/api', channel);
+
 // const uri = process.env.ATLAS_URI;
 
 // mongoose.connect(uri);
