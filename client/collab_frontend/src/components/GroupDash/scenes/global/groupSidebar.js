@@ -120,7 +120,7 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-       
+
             <Item
               title="Manage Team"
               to="team"
@@ -129,16 +129,16 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Contacts Information"
-              to="contacts"
+              title="Channels"
+              to="channels"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
 
             <Item
-              title="Profile Form"
-              to="form"
+              title="Resource Library"
+              to="resource"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -167,11 +167,11 @@ const Sidebar = () => {
             <Item
               title="Resoucre Library"
               to="resource"
-              icon={<LibraryBooksIcon  />}
+              icon={<LibraryBooksIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-           
+
           </Box>
         </Menu>
       </ProSidebar>

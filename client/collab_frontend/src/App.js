@@ -13,6 +13,8 @@ import GroupDashboard from './pages/groupDashboard';
 import Channel from './components/GroupDash/scenes/channels';
 // import Resource from './components/GroupPage/scenes/resource';
 import GDashboard from './components/GroupDash/scenes/dashboard';
+import ChannelForm from './components/GroupDash/scenes/channelForm'
+import ResourceLibrary from './components/GroupDash/scenes/resourceLibraryForm';
 
 function App() {
 
@@ -23,29 +25,30 @@ function App() {
           <Route exact path="/" element={<Home />} />
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           <Route path="*" element={<h1>Not Found</h1>} />
-          <Route path="/community" element={<Community/>} />
-          <Route path="/how" element={<HowItWorksPage/>} />
-          <Route path="/dashboard" element={<GroupPage/>} >
-            <Route path="" element={<Dashboard/>} />
-            <Route path="team" element={<Team/>} />
-            <Route path="calendar" element={<Calendar/>} />
-            <Route path="form" element={<Form/>} />
-            <Route path="contacts" element={<Contacts/>} />
-            <Route path='community' element={<Community/>} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/how" element={<HowItWorksPage />} />
+          <Route path="/dashboard" element={<GroupPage />} >
+            <Route path="" element={<Dashboard />} />
+            <Route path="team" element={<Team />} />
+            <Route path="calendar" element={<Calendar />} />
+            <Route path="form" element={<Form />} />
+            <Route path="contacts" element={<Contacts />} />
+            <Route path='community' element={<Community />} />
           </Route>
-          <Route path="/groupDashboard" element={<GroupDashboard/>} >
-            <Route path="" element={<GDashboard/>} />
-            <Route path="team" element={<Team/>} />
-            <Route path="calendar" element={<Calendar/>} />
-            <Route path="form" element={<Form/>} />
-            <Route path="contacts" element={<Contacts/>} />
-            <Route path='community' element={<Community/>} />
-            <Route path='channel' element={<Channel/>} />
+          <Route path="/groupDashboard" element={<GroupDashboard />} >
+            <Route path="" element={<GDashboard />} />
+            <Route path="team" element={<Team />} />
+            <Route path="calendar" element={<Calendar />} />
+            <Route path="resource" element={<ResourceLibrary />} />
+            <Route path="channels" element={<ChannelForm />} />
+            <Route path='community' element={<Community />} />
+            <Route path='channel' element={<Channel />} />
             {/* <Route path='resource' element={<ResourceLibrary/>} /> */}
           </Route>
         </Routes>
       </Router>
     </>
-)}
+  )
+}
 
 export default App
