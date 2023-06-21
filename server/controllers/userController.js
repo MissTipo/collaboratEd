@@ -53,7 +53,7 @@ const userController = {
         },
       });
     } catch (err) {
-      return res.status(500).json({ error: 'InternalServerError' });
+      return res.status(500).json({ error: 'Internal Server Error' });
     }
   },
 
@@ -124,6 +124,10 @@ const userController = {
         { $push: { groups: group._id } },
         { new: true },
       );
+
+      // poplulate the user with the group details
+      await updatedUser.populate('groups');
+
       return res.status(201).json(updatedUser);
     } catch (err) {
       return res.status(500).json({ error: 'Unauthorized' });
@@ -162,6 +166,10 @@ const userController = {
         { $pull: { groups: group._id } },
         { new: true },
       );
+
+      // poplulate the user with the group details
+      await updatedUser.populate('groups');
+
       return res.status(201).json(updatedUser);
     } catch (err) {
       return res.status(500).json({ error: 'Unauthorized' });
@@ -231,6 +239,10 @@ const userController = {
         { $set: update },
         { new: true },
       );
+
+      // poplulate the user with the group details
+      await updatedUser.populate('groups');
+
       return res.status(201).json(updatedUser);
     } catch (err) {
       return res.status(500).json({ error: 'Internal server error' });
@@ -255,6 +267,10 @@ const userController = {
         { $set: { pictureUrl: '', cloudinaryId: '' } },
         { new: true },
       );
+
+      // poplulate the user with the group details
+      await updatedUser.populate('groups');
+
       return res.status(201).json(updatedUser);
     } catch (err) {
       return res.status(500).json({ error: 'Internal server error' });

@@ -56,7 +56,7 @@ const authController = {
           id: user._id,
           name: user.name,
           email: user.email,
-          groups,
+          // groups,
         },
       });
     } catch (err) {
@@ -198,11 +198,11 @@ const authController = {
 
     try {
       // Get user
-      const user = await db.User.findOne({ _id: userId });
+      const user = await db.User.findOne({ _id: userId }).select('+password');
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
-
+      console.log(user);
       // Check if password is same as before
       const isMatch = await bcrypt.compare(password, user.password);
       if (isMatch) {
@@ -210,6 +210,7 @@ const authController = {
           .status(400)
           .json({ error: 'New Password cannot be same as old' });
       }
+      console.log('here');
 
       // Hash the password
       const salt = await bcrypt.genSalt(10);
