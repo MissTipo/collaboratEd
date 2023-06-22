@@ -7,6 +7,15 @@ const initialState = {
   loading: false,
   token: null,
   alert: { open: false, severity: "info", message: "" },
+  currentChannel: null,
+  channels: [],
+  messages: [],
+  openCreateChannel: false,
+  openEditChannel: false,
+  openDeleteChannel: false,
+  openCreateMessage: false,
+  openEditMessage: false,
+  openDeleteMessage: false,
 };
 
 const Context = createContext(initialState);

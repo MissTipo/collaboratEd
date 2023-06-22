@@ -13,4 +13,10 @@ router.post('/voice-channel/join', voiceChannelController.joinVoiceChannel);
 // Get all voice channels
 router.get('/get-channels', voiceChannelController.getAllVoiceChannels);
 
+// Delete a voice channel
+router.delete('/delete-channel/:channelName', voiceChannelController.deleteVoiceChannelByName);
+
+// get channel id based on channel name
+router.get('/get-channel-id/:channelName', voiceChannelController.getChannelIdByName);
+
 module.exports = router;
