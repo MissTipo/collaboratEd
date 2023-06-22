@@ -38,7 +38,7 @@ exports.createGroup = async (req, res) => {
     // populate the group with the members
     await newGroup.populate('members', 'name email -_id');
 
-    res.status(201).json(newGroup);
+    res.status(201).json({ group: newGroup });
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
@@ -54,7 +54,7 @@ exports.getGroups = async (req, res) => {
   }
 };
 
-// Controller for getting a single group
+// Controller for getting a single group by id
 exports.getGroupById = async (req, res) => {
   try {
     const group = await Group.findById(req.params.id)
@@ -67,7 +67,7 @@ exports.getGroupById = async (req, res) => {
         select: 'title link description tags -_id',
       });
 
-    res.status(200).json(group);
+    res.status(200).json({ group });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -75,7 +75,8 @@ exports.getGroupById = async (req, res) => {
 
 // Controller for updating a group
 exports.updateGroup = async (req, res) => {
-  const { id } = req.user; // id of the user initiating the update
+  // id of the user initiating the update
+  const { id } = req.user;
   const {
     title, description, cohort, schedules, location,
   } = req.body;

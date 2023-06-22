@@ -131,7 +131,12 @@ const userController = {
       );
 
       // poplulate the user with the group details
-      await updatedUser.populate('groups');
+      await updatedUser.populate('groups', {
+        name: 1,
+        description: 1,
+        cohort: 1,
+        department: 1,
+      });
 
       return res.status(201).json({ user: updatedUser });
     } catch (err) {
@@ -173,7 +178,12 @@ const userController = {
       );
 
       // poplulate the user with the group details
-      await updatedUser.populate('groups');
+      await updatedUser.populate('groups', {
+        name: 1,
+        description: 1,
+        cohort: 1,
+        department: 1,
+      });
 
       return res.status(201).json({ user: updatedUser });
     } catch (err) {
