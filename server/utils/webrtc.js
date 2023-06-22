@@ -1,19 +1,19 @@
 // Handle webRTC connections using simple-peer library
-const wrtc = require('wrtc')
-const SimplePeer = require('simple-peer')
+const wrtc = require('wrtc');
+const SimplePeer = require('simple-peer');
 
 // store all active connections
-const connections = {}
+const connections = {};
 
 // Initiate a call
 function initiateCall(stream) {
   // create a new peer instance
   const peer = new SimplePeer({
     initiator: false,
-    stream: stream,
+    stream,
     trickle: false,
-    wrtc: wrtc
-  })
+    wrtc,
+  });
 
   /*
   // listen for signal
@@ -22,7 +22,7 @@ function initiateCall(stream) {
     Object.values(connections).forEach((connection) => {
       connection.send(JSON.stringify(signal));
     });
-  });*/
+  }); */
 
   // Add the new connetion to the active connections
   connections[peer._id] = peer;

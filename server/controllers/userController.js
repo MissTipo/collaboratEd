@@ -46,14 +46,10 @@ const userController = {
       });
 
       return res.status(201).json({
-        user: {
-          id: newUser._id,
-          name,
-          email,
-        },
+        user: newUser,
       });
     } catch (err) {
-      return res.status(500).json({ error: 'InternalServerError' });
+      return res.status(500).json({ error: 'Internal Server Error' });
     }
   },
 
@@ -64,23 +60,32 @@ const userController = {
     // Get password and other updates
     const { password, ...updateData } = req.body;
 
-    // Hash the password before updating
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    // Hash the password before updating if it exists
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Update he password in the object
-    updateData.password = hashedPassword;
+      // Update he password in the object
+      updateData.password = hashedPassword;
+    }
 
     try {
-      await db.User.findOneAndUpdate(
+      const updatedUser = await db.User.findOneAndUpdate(
         { _id: id },
         { $set: updateData },
         // { $set: { password: hashedPassword } },
         { new: true },
       );
-      res.status(201).json('success');
+      res.status(201).json({
+        user: await updatedUser.populate('groups', {
+          name: 1,
+          description: 1,
+          cohort: 1,
+          department: 1,
+        }),
+      });
     } catch (err) {
-      res.status(500).json({ error: 'Unauthorized' });
+      res.status(500).json({ error: 'Internal Server Error' });
     }
   },
 
@@ -88,10 +93,10 @@ const userController = {
   async deleteUser(req, res) {
     const { id } = req.user;
     try {
-      const user = await db.User.findOneAndRemove({ _id: id });
-      res.status(201).json(user);
+      await db.User.findOneAndRemove({ _id: id });
+      res.status(201).json('User deleted successfully');
     } catch (err) {
-      res.status(500).json({ error: 'Unauthorized' });
+      res.status(500).json({ error: 'Internal Server Error' });
     }
   },
 
@@ -111,22 +116,31 @@ const userController = {
         return res.status(400).json({ error: 'User already in the group' });
       }
 
-      // Update the group with the new user
+      // Update the group members list with the new user
       await db.Group.findOneAndUpdate(
         { _id: groupId },
         { $push: { members: id } },
         { new: true },
       );
 
-      // Add the user to the group
+      // Add the user group list with the new group
       const updatedUser = await db.User.findOneAndUpdate(
         { _id: id },
         { $push: { groups: group._id } },
         { new: true },
       );
-      return res.status(201).json(updatedUser);
+
+      // poplulate the user with the group details
+      await updatedUser.populate('groups', {
+        name: 1,
+        description: 1,
+        cohort: 1,
+        department: 1,
+      });
+
+      return res.status(201).json({ user: updatedUser });
     } catch (err) {
-      return res.status(500).json({ error: 'Unauthorized' });
+      return res.status(500).json({ error: 'Internal Server Error' });
     }
   },
 
@@ -162,9 +176,18 @@ const userController = {
         { $pull: { groups: group._id } },
         { new: true },
       );
-      return res.status(201).json(updatedUser);
+
+      // poplulate the user with the group details
+      await updatedUser.populate('groups', {
+        name: 1,
+        description: 1,
+        cohort: 1,
+        department: 1,
+      });
+
+      return res.status(201).json({ user: updatedUser });
     } catch (err) {
-      return res.status(500).json({ error: 'Unauthorized' });
+      return res.status(500).json({ error: 'Internal Server Error' });
     }
   },
 
@@ -190,7 +213,7 @@ const userController = {
 
       return res.status(201).json(filteredGroups);
     } catch (err) {
-      return res.status(500).json({ error: 'Unauthorized' });
+      return res.status(500).json({ error: 'Internal Server Error' });
     }
   },
 
@@ -231,7 +254,11 @@ const userController = {
         { $set: update },
         { new: true },
       );
-      return res.status(201).json(updatedUser);
+
+      // poplulate the user with the group details
+      await updatedUser.populate('groups');
+
+      return res.status(201).json({ user: updatedUser });
     } catch (err) {
       return res.status(500).json({ error: 'Internal server error' });
     }
@@ -255,7 +282,11 @@ const userController = {
         { $set: { pictureUrl: '', cloudinaryId: '' } },
         { new: true },
       );
-      return res.status(201).json(updatedUser);
+
+      // poplulate the user with the group details
+      await updatedUser.populate('groups');
+
+      return res.status(201).json({ user: updatedUser });
     } catch (err) {
       return res.status(500).json({ error: 'Internal server error' });
     }

@@ -3,19 +3,23 @@
 const mongoose = require('mongoose');
 const User = require('../models/User');
 const Group = require('../models/Group');
+require('dotenv').config();
+
+const uri = process.env.MONGO_URI;
 
 class Database {
   constructor() {
     // this.options = options ? options : {};
     // create connection to the database
-    mongoose.connect('mongodb://localhost/mytest', {
+
+    mongoose.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
     this.db = mongoose.connection;
     this.db.on('error', console.error.bind(console, 'connection error:'));
     this.db.once('open', () => {
-      console.log('Connected to DB');
+      console.log('MongoDB database connection established');
     });
 
     // the user model
