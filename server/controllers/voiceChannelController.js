@@ -1,8 +1,8 @@
 // voice channel api logic
 
-const voiceChannel = require('../models/voiceChannel');
-const VoiceChannel = require('../models/voiceChannel');
-const { initiateCall } = require('../utils/webrtc');
+const voiceChannel = require("../models/voiceChannel");
+const VoiceChannel = require("../models/voiceChannel");
+const { initiateCall } = require("../utils/webrtc");
 
 // create voice channel
 const createVoiceChannel = async (req, res) => {
@@ -11,14 +11,14 @@ const createVoiceChannel = async (req, res) => {
     const voiceChannel = await VoiceChannel.create({
       name: name,
       channelType: channelType,
-      group: req.params.groupId
+      group: req.params.groupId,
     });
     res.status(201).json({ channel: voiceChannel });
     voiceChannel.save();
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // Join voice channel
 const joinVoiceChannel = async (req, res) => {
@@ -26,7 +26,7 @@ const joinVoiceChannel = async (req, res) => {
     const { channelId, userId } = req.body;
     const channel = await voiceChannel.findById(channelId);
     if (!channel) {
-      return res.status(404).json({ message: 'Channel not found!' });
+      return res.status(404).json({ message: "Channel not found!" });
     }
 
     // Add user to channel
@@ -37,14 +37,14 @@ const joinVoiceChannel = async (req, res) => {
     initiateCall(channel);
 
     // Emit a socket event to notify other group members that a new call has been initiated
-    io.emit('userJoinedChannel', { channelId, userId });
+    io.emit("userJoinedChannel", { channelId, userId });
 
     // return the channel
     res.status(200).json(channel);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // Share screen in voice channel
 const shareScreen = async (req, res) => {
@@ -52,24 +52,25 @@ const shareScreen = async (req, res) => {
     const { channelId, userId } = req.body;
     const channel = await voiceChannel.findById(channelId);
     if (!channel) {
-      return res.status(404).json({ message: 'Channel not found!' });
+      return res.status(404).json({ message: "Channel not found!" });
     }
 
     // Check if user is a participant of the channel
     if (!channel.participants.includes(userId)) {
-      return res.status(401).json({ message: 'You are not a participant of this channel!' });
+      return res
+        .status(401)
+        .json({ message: "You are not a participant of this channel!" });
     }
 
     // Initiate screen sharing for the channel
     initiateScreenShare(channel);
 
     // Emit a socket event to notify other group members that a user has started screen sharing
-    io.emit('userStartedScreenShare', { channelId, userId });
+    io.emit("userStartedScreenShare", { channelId, userId });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
-
+};
 
 // leave voice channel
 const leaveVoiceChannel = async (req, res) => {
@@ -77,7 +78,7 @@ const leaveVoiceChannel = async (req, res) => {
     const { channelId, userId } = req.body;
     const channel = await voiceChannel.findById(channelId);
     if (!channel) {
-      return res.status(404).json({ message: 'Channel not found!' });
+      return res.status(404).json({ message: "Channel not found!" });
     }
 
     // Remove user from channel
@@ -85,14 +86,14 @@ const leaveVoiceChannel = async (req, res) => {
     await channel.save();
 
     // Emit a socket event to notify other group members that a user has left the channel
-    io.emit('userLeftChannel', { channelId, userId });
+    io.emit("userLeftChannel", { channelId, userId });
 
     // return the channel
     res.status(200).json(channel);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // get all voice channels
 const getAllVoiceChannels = async (_, res) => {
@@ -102,7 +103,7 @@ const getAllVoiceChannels = async (_, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // Fetch channel ID by name
 const getChannelIdByName = async (req, res) => {
@@ -112,7 +113,7 @@ const getChannelIdByName = async (req, res) => {
     if (voiceChannel) {
       res.status(200).json({ channelId: voiceChannel._id });
     } else {
-      res.status(404).json({ message: 'Channel not found!' });
+      res.status(404).json({ message: "Channel not found!" });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -127,11 +128,11 @@ const getVoiceChannelById = async (req, res) => {
     if (voiceChannel) {
       return res.status(200).json(voiceChannel);
     }
-    res.status(404).json({ message: 'Voice channel not found!' });
+    res.status(404).json({ message: "Voice channel not found!" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
 /**
 // delete voice channel by id
 const deleteVoiceChannel = async (req, res) => {
@@ -161,10 +162,10 @@ const deleteVoiceChannelByName = async (req, res) => {
     const result = await VoiceChannel.deleteOne({ name: channelName });
 
     if (result.deletedCount === 0) {
-      return res.status(404).json({ message: 'Channel not found!' });
+      return res.status(404).json({ message: "Channel not found!" });
     }
 
-    res.status(200).json({ message: 'Channel deleted successfully!' });
+    res.status(200).json({ message: "Channel deleted successfully!" });
   } catch (error) {
     res.status(500).json({ error: error.message });
     console.error(error);
@@ -201,5 +202,5 @@ module.exports = {
   shareScreen,
   //deleteVoiceChannel,
   getChannelIdByName,
-  deleteVoiceChannelByName
+  deleteVoiceChannelByName,
 };
