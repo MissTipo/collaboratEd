@@ -19,8 +19,30 @@ const reducer = (state, action) => {
     case "UPDATE_TOKEN":
       return { ...state, token: action.payload };
 
+    case "CREATE_CHANNEL":
+      return { ...state, channels: [...state.channels, action.payload] };
+
+    case "SET_CHANNELS":
+      return { ...state, channels: action.payload };
+
+    case "UPDATE_CHANNEL":
+      return {
+        ...state,
+        channels: state.channels.map((channel) =>
+          channel._id === action.payload._id ? action.payload : channel
+        ),
+      };
+
+    case "DELETE_CHANNEL":
+      return {
+        ...state,
+        channels: state.channels.filter(
+          (channel) => channel._id !== action.payload
+        ),
+      };
+
     default:
-      throw new Error("No matched action!");
+      return state;
   }
 };
 
