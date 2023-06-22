@@ -9,6 +9,9 @@ const app = express();
 const port = process.env.PORT || 5050;
 
 app.use(cors());
+
+// Handle preflight requests
+app.options('*', cors());
 app.use(express.json());
 
 const userRoutes = require("./routes/userRoutes");

@@ -9,7 +9,7 @@ export const createChannel = async (dispatch, channel) => {
 
   // send create channel request
   const data = await fetchData(
-    { url: `${url}/create-channel`, body: channel },
+    { url: `${url}/create-channel`, method: "POST", body: channel },
     dispatch
   );
   if (data) {
@@ -27,14 +27,41 @@ export const fetchChannels = async (dispatch, groupId) => {
 
   // send fetch channels request
   const data = await fetchData(
-    { url: `${url}/get-channels`, body: { groupId } },
+    { url: `${url}/get-channels`, method: "GET" },
     dispatch
   );
   if (data) {
     // handle successful channel fetching
-    console.log("Fetched channels:", data.channels);
+    console.log(data.channels);
     // Perform any necessary actions with the fetched channels
+
+    dispatch({ type: "SET_CHANNELS", payload: data.channels });
+    return data.channels;
   }
   dispatch({ type: "END_LOADING" });
 };
 
+// Action to delete a channel
+
+export const deleteChannel = async (dispatch, channelId) => {
+  dispatch({ type: "START_LOADING" });
+
+  try {
+    // Send delete channel request
+    const data = await fetchData(
+      { url: `${url}/delete-channel/${channelId}`, method: "DELETE" },
+      dispatch
+    );
+
+    // Handle successful channel deletion
+    if (data) {
+      console.log("Channel deleted successfully");
+      // Perform any necessary actions upon successful channel deletion
+    }
+  } catch (error) {
+    console.error("Error deleting channel:", error);
+    // Handle error if needed
+  }
+
+  dispatch({ type: "END_LOADING" });
+};
