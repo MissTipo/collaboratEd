@@ -18,7 +18,7 @@ router.put(
 );
 
 // login user
-router.get('/login', authController.loginUser);
+router.post('/login', authController.loginUser);
 
 // get user profile
 router.get(
@@ -71,6 +71,23 @@ router.post(
   '/reset-password',
   authController.authenticateUser,
   authController.resetPassword,
+);
+
+const upload = require('../utils/multer');
+
+// Upload profile picture
+router.post(
+  '/upload/user',
+  authController.authenticateUser,
+  upload,
+  userController.uploadProfilePicture,
+);
+
+// Delete profile picture
+router.delete(
+  '/upload/user',
+  authController.authenticateUser,
+  userController.deleteProfilePicture,
 );
 
 module.exports = router;

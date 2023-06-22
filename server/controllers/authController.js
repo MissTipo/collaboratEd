@@ -9,6 +9,7 @@ const redisClient = require('../utils/redis');
 require('dotenv').config();
 
 const jwtSecret = process.env.JWT_SECRET;
+const jwtExpire = Number(process.env.JWT_EXPIRES_IN);
 
 const authController = {
   // Login user and return JWT token
@@ -37,16 +38,18 @@ const authController = {
 
       // Create the jwt token
       const token = jwt.sign({ id: user._id }, jwtSecret, {
-        expiresIn: 3600,
+        expiresIn: jwtExpire,
       });
 
+      // Send the token to the client and populate groups belonging to the user
       return res.status(200).json({
         token,
-        user: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-        },
+        user: await user.populate('groups', {
+          name: 1,
+          description: 1,
+          cohort: 1,
+          department: 1,
+        }),
       });
     } catch (err) {
       return res.status(500).json({ error: 'InternalServerError', err });
@@ -89,11 +92,12 @@ const authController = {
         return res.status(401).json({ error: 'Unauthorized' });
       }
       return res.status(200).json({
-        user: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-        },
+        user: await user.populate('groups', {
+          name: 1,
+          description: 1,
+          cohort: 1,
+          department: 1,
+        }),
       });
     } catch (err) {
       return res.status(500).json({ error: 'InternalServerError' });
@@ -109,7 +113,7 @@ const authController = {
         return res.status(401).json({ error: 'Unauthorized' });
       }
       // Add the token to the blacklist
-      redisClient.set(req.token, id, 3600);
+      redisClient.set(req.token, id, jwtExpire);
 
       return res.status(200).json({ message: 'Logout successful' });
     } catch (err) {
@@ -180,11 +184,11 @@ const authController = {
 
     try {
       // Get user
-      const user = await db.User.findOne({ _id: userId });
+      const user = await db.User.findOne({ _id: userId }).select('+password');
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
-
+      console.log(user);
       // Check if password is same as before
       const isMatch = await bcrypt.compare(password, user.password);
       if (isMatch) {
@@ -192,6 +196,7 @@ const authController = {
           .status(400)
           .json({ error: 'New Password cannot be same as old' });
       }
+      console.log('here');
 
       // Hash the password
       const salt = await bcrypt.genSalt(10);

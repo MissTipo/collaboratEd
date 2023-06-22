@@ -10,8 +10,11 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
-import Hero1 from '../../../../assets/Hero1.png';
+import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
+import Hero1 from "../../../../assets/Hero1.png";
+
+// Access the user object
+import { useValue } from "../../../../context/contextProvider";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -36,6 +39,10 @@ const Sidebar = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+
+  const { state } = useValue();
+  const { currentUser } = state;
+  const userName = currentUser ? currentUser.name.split(" ")[0] : "Alan";
 
   return (
     <Box
@@ -92,7 +99,7 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={Hero1}
+                  src={currentUser.pictureUrl || Hero1}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
@@ -103,7 +110,7 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  UserName
+                  {userName}
                 </Typography>
               </Box>
             </Box>
@@ -118,8 +125,9 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-       
+
             {/* <Item
+            <Item
               title="Manage Team"
               to="team"
               icon={<PeopleOutlinedIcon />}
@@ -155,7 +163,6 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-           
           </Box>
         </Menu>
       </ProSidebar>

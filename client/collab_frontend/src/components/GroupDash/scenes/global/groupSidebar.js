@@ -14,10 +14,26 @@ import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact
 import ChatIcon from '@mui/icons-material/Chat';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import Hero1 from '../../../../assets/Hero1.png';
+//import ChannelList from '../channelList';
+import { fetchChannels } from '../../../../actions/channel';
+import { useValue } from '../../../../context/contextProvider';
+import { useEffect } from 'react';
+import React from 'react';
+import TagIcon from '@mui/icons-material/Tag';
+import DeleteChannelForm from '../deleteChannelForm';
+import { deleteChannel } from '../../../../actions/channel';
 
-const Item = ({ title, to, icon, selected, setSelected }) => {
+
+
+const Item = ({ title, to, icon, selected, setSelected, onChannelRightClick }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const handleContextMenu = (event) => {
+    event.preventDefault();
+    onChannelRightClick(title);
+  };
+
   return (
     <MenuItem
       active={selected === title}
@@ -26,6 +42,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
       }}
       onClick={() => setSelected(title)}
       icon={icon}
+      onContextMenu={handleContextMenu}
     >
       <Typography>{title}</Typography>
       <Link to={to} />
@@ -38,9 +55,53 @@ const Sidebar = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  const { dispatch } = useValue();
+  const [channels, setChannels] = React.useState([]);
+  const [showForm, setShowForm] = React.useState(false);
+  const [selectedChannel, setSelectedChannel] = React.useState("");
+  const sidebarRef = React.useRef(null);
+
+  useEffect(() => {
+    const handleContextMenu = (event) => {
+      if (sidebarRef.current && sidebarRef.current.contains(event.target)) {
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener("contextmenu", handleContextMenu);
+    return () => {
+      window.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, []);
+
+
+  const handleChannelRightClick = (name) => {
+    setShowForm(true);
+    setSelectedChannel(name);
+  };
+
+  const handleDeleteChannel = async (channelId) => {
+    try {
+      await deleteChannel(channelId, dispatch);
+      setShowForm(false);
+      console.log("Channel deleted");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchChannels(dispatch).then((data) => {
+      if (data) {
+        setChannels(data);
+      }
+    });
+  }, [dispatch]);
+
 
   return (
     <Box
+      ref={sidebarRef}
       sx={{
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
@@ -120,7 +181,7 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-       
+
             <Item
               title="Manage Team"
               to="team"
@@ -129,16 +190,32 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Contacts Information"
-              to="contacts"
+              title="Channels"
+              to="channels"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-
+            {channels.map((channel) => (
+              <Item
+                key={channel._id}
+                title={channel.name}
+                to={`channels/${channel._id}`}
+                icon={<TagIcon />}
+                selected={selected}
+                setSelected={setSelected}
+                onChannelRightClick={handleChannelRightClick}
+              >
+                <DeleteChannelForm
+                  channelId={channel._id} channelName={channel.name}
+                  onClose={() => setShowForm(false)}
+                  onDelete={() => handleDeleteChannel(channel._id)}
+                />
+              </Item>
+            ))}
             <Item
-              title="Profile Form"
-              to="form"
+              title="Resource Library"
+              to="resource"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -158,23 +235,43 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Channel"
+              title="Forum"
               to="channel"
               icon={<ChatIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Resoucre Library"
+              title="Resource Library"
               to="resource"
-              icon={<LibraryBooksIcon  />}
+              icon={<LibraryBooksIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-           
           </Box>
         </Menu>
       </ProSidebar>
+      {showForm && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            border: "1px solid black",
+            padding: "20px",
+            backgroundColor: "white",
+            zIndex: "9999",
+          }}
+        >
+          <h2>Delete Channel: {selectedChannel}</h2>
+          {/* Form content for deleting channel */}
+          <DeleteChannelForm
+            channelId={selectedChannel}
+            onClose={() => setShowForm(false)}
+          />
+        </div>
+      )}
     </Box>
   );
 };

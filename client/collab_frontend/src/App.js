@@ -13,8 +13,8 @@ import GroupDashboard from './pages/groupDashboard';
 import Channel from './components/GroupDash/scenes/channels';
 // import Resource from './components/GroupPage/scenes/resource';
 import GDashboard from './components/GroupDash/scenes/dashboard';
-// import ChannelForm from './components/GroupDash/scenes/channelForm'
-// import ResourceLibrary from './components/GroupDash/scenes/resourceLibraryForm';
+import ChannelForm from './components/GroupDash/scenes/channelForm'
+import ResourceLibrary from './components/GroupDash/scenes/resourceLibraryForm';
 
 function App() {
 
@@ -39,8 +39,10 @@ function App() {
             <Route path="" element={<GDashboard />} />
             <Route path="team" element={<Team />} />
             <Route path="calendar" element={<Calendar />} />
-            {/* <Route path="resource" element={<ResourceLibrary />} /> */}
-            {/* <Route path="channels" element={<ChannelForm />} /> */}
+
+            <Route path="resource" element={<ResourceLibrary />} />
+            <Route path="channels" element={<ChannelForm />} />
+
             <Route path='community' element={<Community />} />
             <Route path='channel' element={<Channel />} />
             {/* <Route path='resource' element={<ResourceLibrary/>} /> */}
