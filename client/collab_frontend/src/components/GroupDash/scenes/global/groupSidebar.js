@@ -22,6 +22,7 @@ import React from 'react';
 import TagIcon from '@mui/icons-material/Tag';
 import DeleteChannelForm from '../deleteChannelForm';
 import { deleteChannel } from '../../../../actions/channel';
+import VoiceChannelPage from '../channelPage';
 
 
 
@@ -77,6 +78,10 @@ const Sidebar = () => {
 
   const handleChannelRightClick = (name) => {
     setShowForm(true);
+    setSelectedChannel(name);
+  };
+
+  const handleChannelClick = (name) => {
     setSelectedChannel(name);
   };
 
@@ -181,7 +186,6 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-
             <Item
               title="Manage Team"
               to="team"
@@ -204,6 +208,7 @@ const Sidebar = () => {
                 icon={<TagIcon />}
                 selected={selected}
                 setSelected={setSelected}
+                onChannelClick={() => handleChannelClick(channel.name)}
                 onChannelRightClick={handleChannelRightClick}
               >
                 <DeleteChannelForm
@@ -271,6 +276,9 @@ const Sidebar = () => {
             onClose={() => setShowForm(false)}
           />
         </div>
+      )}
+      {selectedChannel && (
+        <VoiceChannelPage channelName={selectedChannel} />
       )}
     </Box>
   );

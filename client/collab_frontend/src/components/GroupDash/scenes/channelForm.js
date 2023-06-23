@@ -4,7 +4,7 @@ import { styled } from '@mui/system';
 import { createChannel } from '../../../actions/channel';
 import { fetchChannels } from '../../../actions/channel';
 import { useValue } from '../../../context/contextProvider';
-import ChannelList from './channelList';
+//import ChannelList from './channelList';
 import { useNavigate } from 'react-router-dom';
 
 const FormContainer = styled('form')({
@@ -54,7 +54,6 @@ const ChannelForm = () => {
       await createChannel(dispatch, channel);
       const updatedChannels = await fetchChannels(dispatch);
       setChannels(updatedChannels);
-      //await fetchChannels(dispatch);
 
       // Reset form values
       setChannelName('');

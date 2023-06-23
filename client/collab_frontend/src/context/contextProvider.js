@@ -16,6 +16,9 @@ const initialState = {
   openCreateMessage: false,
   openEditMessage: false,
   openDeleteMessage: false,
+  groups: [],
+  openCreateGroup: false,
+  openEditGroup: false,
 };
 
 const Context = createContext(initialState);
