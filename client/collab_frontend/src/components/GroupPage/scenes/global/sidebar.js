@@ -16,6 +16,7 @@ import Diversity2SharpIcon from '@mui/icons-material/Diversity2Sharp';
 import { fetchGroups } from "../../../../actions/group";
 import { useValue } from '../../../../context/contextProvider';
 
+
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -49,6 +50,10 @@ const Sidebar = () => {
       }
     });
   }, [dispatch]);
+
+  const { state } = useValue();
+  const { currentUser } = state;
+  const userName = currentUser ? currentUser.name.split(" ")[0] : "Alan";
 
   return (
     <Box
@@ -105,7 +110,7 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={Hero1}
+                  src={currentUser.pictureUrl || Hero1}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
@@ -116,7 +121,7 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  UserName
+                  {userName}
                 </Typography>
               </Box>
             </Box>
@@ -130,7 +135,6 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
 
             <Item
               title="Manage Team"

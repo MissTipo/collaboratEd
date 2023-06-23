@@ -39,7 +39,7 @@ export const login = async (dispatch, user) => {
   if (data) {
     // update the user and token
     dispatch({ type: "UPDATE_TOKEN", payload: data.token });
-    console.log(data.token);
+    // console.log(data.token);
     dispatch({ type: "UPDATE_USER", payload: data.user });
     dispatch({ type: "CLOSE_LOGIN" });
     dispatch({
