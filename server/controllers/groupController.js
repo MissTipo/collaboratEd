@@ -2,28 +2,30 @@
 
 const db = require('../utils/db');
 const Group = require('../models/Group');
-const resourceController = require('./resourceController');
+//const resourceController = require('./resourceController');
 const Resource = require('../models/Resource');
 // const { ObjectId } = require('mongoose').Types;
 
 // Controller for creating a new group
 exports.createGroup = async (req, res) => {
-  const { id } = req.user; // id of the user creating the group
+  //const { id } = req.user; // id of the user creating the group
   const {
-    name, description, cohort, schedules, location, department,
+    name, institution, cohort, schedules, location, department,
   } = req.body;
   const newGroup = new Group({
-    ownerId: id,
+    //ownerId: id,
     name,
-    description,
+    institution,
     cohort,
     schedules,
     location,
     department,
   });
 
-  // update the members of new group to include the owner
-  newGroup.members.push(id);
+
+  /** update the new group member to include the owner
+  newGroup.members.push(id);*/
+
 
   // update the user to include the new group
   await db.User.findOneAndUpdate(
@@ -35,9 +37,6 @@ exports.createGroup = async (req, res) => {
   try {
     await newGroup.save();
 
-    // populate the group with the members
-    await newGroup.populate('members', 'name email -_id');
-
     res.status(201).json({ group: newGroup });
   } catch (error) {
     res.status(409).json({ message: error.message });
@@ -45,10 +44,10 @@ exports.createGroup = async (req, res) => {
 };
 
 // Controller for getting all groups
-exports.getGroups = async (req, res) => {
+exports.getGroups = async (_, res) => {
   try {
     const groups = await Group.find();
-    res.status(200).json(groups);
+    res.status(200).json({ groups: groups });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

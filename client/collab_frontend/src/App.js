@@ -6,7 +6,7 @@ import Community from './pages/communityPage';
 import HowItWorksPage from './pages/HowItWorks';
 import GroupPage from './pages/GroupPage';
 import Team from './components/GroupPage/scenes/team';
-import Contacts from './components/GroupPage/scenes/contacts';
+//import Contacts from './components/GroupPage/scenes/contacts';
 import Form from './components/GroupPage/scenes/form';
 import Calendar from './components/GroupPage/scenes/calendar';
 import GroupDashboard from './pages/groupDashboard';
@@ -15,6 +15,8 @@ import Channel from './components/GroupDash/scenes/channels';
 import GDashboard from './components/GroupDash/scenes/dashboard';
 import ChannelForm from './components/GroupDash/scenes/channelForm'
 import ResourceLibrary from './components/GroupDash/scenes/resourceLibraryForm';
+import VoiceChannelPage from './components/GroupDash/scenes/channelPage';
+import GroupForm from './components/GroupPage/scenes/groupForm'
 
 function App() {
 
@@ -32,7 +34,7 @@ function App() {
             <Route path="team" element={<Team />} />
             <Route path="calendar" element={<Calendar />} />
             <Route path="form" element={<Form />} />
-            <Route path="contacts" element={<Contacts />} />
+            <Route path="groups" element={<GroupForm />} />
             <Route path='community' element={<Community />} />
           </Route>
           <Route path="/groupDashboard" element={<GroupDashboard />} >
@@ -41,6 +43,7 @@ function App() {
             <Route path="calendar" element={<Calendar />} />
             <Route path="resource" element={<ResourceLibrary />} />
             <Route path="channels" element={<ChannelForm />} />
+            <Route path="channels/:channelId" element={<VoiceChannelPage />} />
             <Route path='community' element={<Community />} />
             <Route path='channel' element={<Channel />} />
             {/* <Route path='resource' element={<ResourceLibrary/>} /> */}

@@ -41,6 +41,15 @@ const reducer = (state, action) => {
         ),
       };
 
+    case "SET_GROUPS":
+      return { ...state, groups: action.payload };
+
+    case "CREATE_GROUP":
+      return { ...state, groups: [...state.groups, action.payload] };
+
+    case "SET_CURRENT_GROUP":
+      return { ...state, currentGroup: action.payload };
+
     default:
       return state;
   }
