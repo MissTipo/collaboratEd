@@ -6,13 +6,13 @@ const authController = require('../controllers/authController');
 
 // Create a new group by a verified user
 router.post(
-  '/group',
-  authController.authenticateUser,
+  '/create-group',
+  //authController.authenticateUser,
   groupController.createGroup,
 );
 
 // Retrieve all groups
-router.get('/groups', groupController.getGroups);
+router.get('/get-groups', groupController.getGroups);
 
 // Retrieve a single group with groupId
 router.get(
@@ -30,8 +30,8 @@ router.put(
 
 // Delete a group with groupId by verified user
 router.delete(
-  '/group/:id',
-  authController.authenticateUser,
+  '/delete-group/:name',
+  //authController.authenticateUser,
   groupController.deleteGroup,
 );
 

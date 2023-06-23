@@ -171,27 +171,6 @@ const deleteVoiceChannelByName = async (req, res) => {
   }
 };
 
-/**
-// Delete voice channel by name
-const deleteVoiceChannelByName = async (req, res) => {
-  try {
-    const { channelName } = req.params;
-    const channel = await VoiceChannel.findOne({ name: channelName });
-
-    if (!channel) {
-      return res.status(404).json({ message: 'Channel not found!' });
-    }
-
-    // Delete channel
-    await channel.delete();
-
-    res.status(200).json({ message: 'Channel deleted successfully!' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-    console.error(error);
-  }
-};*/
-
 module.exports = {
   createVoiceChannel,
   getAllVoiceChannels,

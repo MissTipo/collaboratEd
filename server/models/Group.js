@@ -6,7 +6,7 @@ const groupSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  description: {
+  institution: {
     type: String,
     required: true,
   },
@@ -20,11 +20,11 @@ const groupSchema = new mongoose.Schema({
     required: true,
   },
 
-  // Owner of the group
+  /** Owner of the group
   ownerId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-  },
+  },*/
 
   members: [
     {
