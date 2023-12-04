@@ -4,3 +4,6 @@ package-lock.json
 
 # test file
 nodemailer.js
+package.json
+redis.js
+.gitignore
