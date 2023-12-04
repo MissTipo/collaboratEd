@@ -11,6 +11,7 @@ const fetchData = async (
 
   // set body
   body = body ? JSON.stringify(body) : null;
+
   try {
     // make the request
     const response = await fetch(url, { method, headers, body });
@@ -21,6 +22,8 @@ const fetchData = async (
         dispatch({ type: "UPDATE_USER", payload: null });
         throw new Error(data.error);
       } else if (response.status === 400) {
+        throw new Error(data.error);
+      } else if (response.status === 500) {
         throw new Error(data.error);
       }
     }

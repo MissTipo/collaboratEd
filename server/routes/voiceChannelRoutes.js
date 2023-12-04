@@ -1,5 +1,6 @@
 // Contains the routes for the voice channel endpoints
 const express = require('express');
+
 const router = express.Router();
 const voiceChannelController = require('../controllers/voiceChannelController');
 

@@ -1,5 +1,6 @@
 // schema definition for voiceChannel
 const mongoose = require('mongoose');
+
 const voiceChannelSchema = mongoose.Schema({
   group: {
     type: mongoose.Schema.Types.ObjectId,
@@ -13,10 +14,10 @@ const voiceChannelSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   }],
-  /*inviteCode: {
+  /* inviteCode: {
     type: String,
     required: true,
-  },*/
+  }, */
   scheduledTime: {
     type: Date,
     required: false,
@@ -30,10 +31,10 @@ const voiceChannelSchema = mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
-    /*message: {
+    /* message: {
       type: String,
       required: true,
-    },*/
+    }, */
     timestamp: {
       type: Date,
       default: Date.now,
