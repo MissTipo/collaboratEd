@@ -12,6 +12,8 @@
 /build
 
 package-lock.json
+package.json
+.gitignore
 
 # misc
 .env
